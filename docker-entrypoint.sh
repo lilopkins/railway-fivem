@@ -22,6 +22,6 @@ END
 frpc -c /tmp/frpc.toml &
 FRPC_PID=$!
 
-/sbin/tini -- /usr/bin/entrypoint +set txDataPath /config/txData $*
+/usr/bin/entrypoint +set txDataPath /config/txData $*
 kill $FRPC_PID
 

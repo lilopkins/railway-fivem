@@ -10,5 +10,5 @@ RUN curl -Lo /tmp/frp.tar.gz https://github.com/fatedier/frp/releases/download/v
 WORKDIR /config
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/docker-entrypoint.sh"]
 
