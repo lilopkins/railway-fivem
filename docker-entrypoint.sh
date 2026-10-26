@@ -8,6 +8,7 @@ if [ -n "${SFTP_AUTHORIZED_KEY:-}" ]; then
     chmod 600 /home/sftp/.ssh/authorized_keys
     chgrp -R config /config
     chmod g+rwx /config
+    chmod -R g+rw /config
     ssh-keygen -A
 
     cat > /etc/ssh/sshd_config << 'END'
