@@ -6,7 +6,7 @@ if [ -n "${SFTP_AUTHORIZED_KEY:-}" ]; then
     printf '%s\n' "$SFTP_AUTHORIZED_KEY" > /home/sftp/.ssh/authorized_keys
     chown sftp:config /home/sftp/.ssh/authorized_keys
     chmod 600 /home/sftp/.ssh/authorized_keys
-    chgrp config /config
+    chgrp -R config /config
     chmod g+rwx /config
     ssh-keygen -A
 
