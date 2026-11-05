@@ -35,7 +35,8 @@ END
     SSHD_PID=$!
 fi
 
-cat << END | tee /tmp/frpc.toml
+if [ -n "${PROXY_ADDR}" ]; then
+    cat << END | tee /tmp/frpc.toml
 serverAddr = "$PROXY_ADDR"
 serverPort = ${PROXY_PORT:-7000}
 transport.poolCount = 16
@@ -54,8 +55,9 @@ localPort = 30120
 remotePort = ${PROXY_REMOTE_PORT:-30120}
 type = "udp"
 END
-frpc -c /tmp/frpc.toml &
-FRPC_PID=$!
+    frpc -c /tmp/frpc.toml &
+    FRPC_PID=$!
+fi
 
 if [ -n "${PLAYIT_SECRET_KEY}" ]; then
     playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1
@@ -63,6 +65,6 @@ if [ -n "${PLAYIT_SECRET_KEY}" ]; then
 fi
 
 /usr/bin/entrypoint +set txDataPath /config/txData "$*"
-kill $FRPC_PID
+[ -n "${FRPC_PID:-}" ] && kill "$FRPC_PID"
 [ -n "${SSHD_PID:-}" ] && kill "$SSHD_PID"
 [ -n "${PLAYITD_PID:-}" ] && kill "$PLAYITD_PID"
