@@ -60,7 +60,7 @@ END
 fi
 
 if [ -n "${PLAYIT_SECRET_KEY}" ]; then
-    playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1
+    playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1 &
     PLAYITD_PID=$!
 fi
 
