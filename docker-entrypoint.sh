@@ -58,7 +58,7 @@ frpc -c /tmp/frpc.toml &
 FRPC_PID=$!
 
 if [ -n "${PLAYIT_SECRET_KEY}" ]; then
-    exec playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1
+    playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1
     PLAYITD_PID=$!
 fi
 
