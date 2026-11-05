@@ -57,6 +57,12 @@ END
 frpc -c /tmp/frpc.toml &
 FRPC_PID=$!
 
-/usr/bin/entrypoint +set txDataPath /config/txData $*
+if [ -n "${PLAYIT_SECRET_KEY}" ]; then
+    exec playitd --secret="${PLAYIT_SECRET_KEY}" --platform-docker 2>&1
+    PLAYITD_PID=$!
+fi
+
+/usr/bin/entrypoint +set txDataPath /config/txData "$*"
 kill $FRPC_PID
 [ -n "${SSHD_PID:-}" ] && kill "$SSHD_PID"
+[ -n "${PLAYITD_PID:-}" ] && kill "$PLAYITD_PID"

@@ -15,7 +15,8 @@ RUN FRP_VERSION="$(curl -fsSL -o /dev/null -w '%{url_effective}' https://github.
     mkdir -p /usr/local/bin && \
     ln -s /usr/share/frp/frpc /usr/local/bin/frpc && \
     rm -f /tmp/frp.tar.gz
-RUN curl -fsSL https://packages.playit.gg/install.sh | bash
+COPY --from=ghcr.io/playit-cloud/playit-agent:1.0 /usr/local/bin/playitd /usr/local/bin/playitd
+RUN chmod +x /usr/local/bin/playitd
 
 WORKDIR /config
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
